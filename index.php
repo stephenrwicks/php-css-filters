@@ -223,7 +223,7 @@ $items = [
 <!DOCTYPE html>
 <html>
 <head>
-    <title>:has() Filter Demo</title>
+    <title>php + css filters</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/stephenrwicks/wicks.css@main/wicks.css">
     <style>
 
@@ -269,16 +269,15 @@ $items = [
     .item {
         display: block;
         padding: 10px;
-        margin-bottom: 8px;
         border: 1px solid #ddd;
     }
 
-
 <?php foreach ($filters as $filter => $options): ?>
-    .filter-demo:has([data-filter="<?= $filter ?>"]:checked) .item:not(<?= implode(', ', array_map(fn($v) => ".filter-demo:has([data-filter=\"{$filter}\"][value=\"{$v}\"]:checked) [data-{$filter}~=\"{$v}\"]", array_keys($options))) ?>) { display: none; }
+    .filter-demo:has([data-filter="<?= $filter ?>"]:checked) .item:not(<?= implode(',', array_map(fn($v) => ".filter-demo:has([data-filter=\"{$filter}\"][value=\"{$v}\"]:checked) [data-{$filter}~=\"{$v}\"]", array_keys($options))) ?>){display:none}
+    <?php foreach ($options as $value => $label): ?>
+        .filter-demo:has([data-filter="<?= $filter ?>"][value="<?= $value ?>"]:checked) .item [data-<?= $filter ?>~="<?= $value ?>"]{color:blue;}
+    <?php endforeach; ?>
 <?php endforeach; ?>
-
-
     </style>
 
 
@@ -286,67 +285,37 @@ $items = [
 
 <body>
 
-<div class="filter-demo">
 
+<div class="filter-demo">
     <div class="filters">
         <?php foreach ($filters as $filter => $options): ?>
             <fieldset class="filter-group">
                 <legend><?= ucfirst($filter) ?></legend>
                 <?php foreach ($options as $value => $label): ?>
-                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="<?= $filter ?>"
-                            value="<?= $value ?>"
-                        >
-                        <?= htmlspecialchars($label) ?>
-                    </label>
+                    <label><input type="checkbox" data-filter="<?= htmlspecialchars($filter) ?>" value="<?= htmlspecialchars($value) ?>"><?= htmlspecialchars($label) ?></label>
                 <?php endforeach; ?>
             </fieldset>
         <?php endforeach; ?>
     </div>
 
-
     <div class="results">
-
         <?php foreach ($items as $item): ?>
-            <?php
-                $format = implode(' ', $item['format']);
-                $audience = implode(' ', $item['audience']);
-                $language = implode(' ', $item['language']);
-                $genre = implode(' ', $item['genre']);
-                $availability = implode(' ', $item['availability']);
-
-                $formatDisplay = implode(', ', $item['format']);
-                $audienceDisplay = implode(', ', $item['audience']);
-                $languageDisplay = implode(', ', $item['language']);
-                $genreDisplay = implode(', ', $item['genre']);
-                $availabilityDisplay = implode(', ', $item['availability']);
-            ?>
-
-            <div
-                class="item"
-                data-format="<?= htmlspecialchars($format) ?>"
-                data-audience="<?= htmlspecialchars($audience) ?>"
-                data-language="<?= htmlspecialchars($language) ?>"
-                data-genre="<?= htmlspecialchars($genre) ?>"
-                data-availability="<?= htmlspecialchars($availability) ?>"
+            <div class="item"
+                <?php foreach ($item as $key => $values): ?>
+                    <?php if (!isset($filters[$key])) continue; ?>
+                    data-<?= htmlspecialchars($key) ?>="<?= htmlspecialchars(implode(' ', $values)) ?>"
+                <?php endforeach; ?>
             >
                 <strong><?= htmlspecialchars($item['title']) ?></strong>
-                <br>
-                Format: <?= htmlspecialchars($formatDisplay) ?>
-                <br>
-                Audience: <?= htmlspecialchars($audienceDisplay) ?>
-                <br>
-                Language: <?= htmlspecialchars($languageDisplay) ?>
-                <br>
-                Genre: <?= htmlspecialchars($genreDisplay) ?>
-                <br>
-                Availability: <?= htmlspecialchars($availabilityDisplay) ?>
+                <?php foreach ($item as $key => $values): ?>
+                    <?php if (!isset($filters[$key])) continue; ?>
+                    <div class="item-line"><?= htmlspecialchars(ucfirst($key)) ?>: <?php foreach ($values as $index => $value): ?><?php if ($index > 0): ?>, <?php endif; ?><span class="item-value" data-<?= htmlspecialchars($key) ?>="<?= htmlspecialchars($value) ?>"><?= htmlspecialchars($filters[$key][$value]) ?></span><?php endforeach; ?></div>
+                <?php endforeach; ?>
             </div>
-
         <?php endforeach; ?>
     </div>
 </div>
+
+
 </body>
 </html>

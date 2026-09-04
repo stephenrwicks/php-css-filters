@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>:has() Filter Demo</title>
+    <title>php + css filters</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/stephenrwicks/wicks.css@main/wicks.css">
     <style>
 
@@ -48,522 +48,363 @@
     .item {
         display: block;
         padding: 10px;
-        margin-bottom: 8px;
         border: 1px solid #ddd;
     }
 
-
-    .filter-demo:has([data-filter="format"]:checked) .item:not(.filter-demo:has([data-filter="format"][value="book"]:checked) [data-format~="book"], .filter-demo:has([data-filter="format"][value="dvd"]:checked) [data-format~="dvd"], .filter-demo:has([data-filter="format"][value="audiobook"]:checked) [data-format~="audiobook"], .filter-demo:has([data-filter="format"][value="ebook"]:checked) [data-format~="ebook"]) { display: none; }
-    .filter-demo:has([data-filter="audience"]:checked) .item:not(.filter-demo:has([data-filter="audience"][value="adult"]:checked) [data-audience~="adult"], .filter-demo:has([data-filter="audience"][value="teen"]:checked) [data-audience~="teen"], .filter-demo:has([data-filter="audience"][value="children"]:checked) [data-audience~="children"]) { display: none; }
-    .filter-demo:has([data-filter="language"]:checked) .item:not(.filter-demo:has([data-filter="language"][value="english"]:checked) [data-language~="english"], .filter-demo:has([data-filter="language"][value="spanish"]:checked) [data-language~="spanish"], .filter-demo:has([data-filter="language"][value="french"]:checked) [data-language~="french"], .filter-demo:has([data-filter="language"][value="german"]:checked) [data-language~="german"]) { display: none; }
-    .filter-demo:has([data-filter="genre"]:checked) .item:not(.filter-demo:has([data-filter="genre"][value="fiction"]:checked) [data-genre~="fiction"], .filter-demo:has([data-filter="genre"][value="mystery"]:checked) [data-genre~="mystery"], .filter-demo:has([data-filter="genre"][value="fantasy"]:checked) [data-genre~="fantasy"], .filter-demo:has([data-filter="genre"][value="scifi"]:checked) [data-genre~="scifi"], .filter-demo:has([data-filter="genre"][value="romance"]:checked) [data-genre~="romance"], .filter-demo:has([data-filter="genre"][value="history"]:checked) [data-genre~="history"]) { display: none; }
-    .filter-demo:has([data-filter="availability"]:checked) .item:not(.filter-demo:has([data-filter="availability"][value="available"]:checked) [data-availability~="available"], .filter-demo:has([data-filter="availability"][value="checkedout"]:checked) [data-availability~="checkedout"]) { display: none; }
-
-
-    </style>
+    .filter-demo:has([data-filter="format"]:checked) .item:not(.filter-demo:has([data-filter="format"][value="book"]:checked) [data-format~="book"],.filter-demo:has([data-filter="format"][value="dvd"]:checked) [data-format~="dvd"],.filter-demo:has([data-filter="format"][value="audiobook"]:checked) [data-format~="audiobook"],.filter-demo:has([data-filter="format"][value="ebook"]:checked) [data-format~="ebook"]){display:none}
+            .filter-demo:has([data-filter="format"][value="book"]:checked) .item [data-format~="book"]{color:blue;}
+            .filter-demo:has([data-filter="format"][value="dvd"]:checked) .item [data-format~="dvd"]{color:blue;}
+            .filter-demo:has([data-filter="format"][value="audiobook"]:checked) .item [data-format~="audiobook"]{color:blue;}
+            .filter-demo:has([data-filter="format"][value="ebook"]:checked) .item [data-format~="ebook"]{color:blue;}
+        .filter-demo:has([data-filter="audience"]:checked) .item:not(.filter-demo:has([data-filter="audience"][value="adult"]:checked) [data-audience~="adult"],.filter-demo:has([data-filter="audience"][value="teen"]:checked) [data-audience~="teen"],.filter-demo:has([data-filter="audience"][value="children"]:checked) [data-audience~="children"]){display:none}
+            .filter-demo:has([data-filter="audience"][value="adult"]:checked) .item [data-audience~="adult"]{color:blue;}
+            .filter-demo:has([data-filter="audience"][value="teen"]:checked) .item [data-audience~="teen"]{color:blue;}
+            .filter-demo:has([data-filter="audience"][value="children"]:checked) .item [data-audience~="children"]{color:blue;}
+        .filter-demo:has([data-filter="language"]:checked) .item:not(.filter-demo:has([data-filter="language"][value="english"]:checked) [data-language~="english"],.filter-demo:has([data-filter="language"][value="spanish"]:checked) [data-language~="spanish"],.filter-demo:has([data-filter="language"][value="french"]:checked) [data-language~="french"],.filter-demo:has([data-filter="language"][value="german"]:checked) [data-language~="german"]){display:none}
+            .filter-demo:has([data-filter="language"][value="english"]:checked) .item [data-language~="english"]{color:blue;}
+            .filter-demo:has([data-filter="language"][value="spanish"]:checked) .item [data-language~="spanish"]{color:blue;}
+            .filter-demo:has([data-filter="language"][value="french"]:checked) .item [data-language~="french"]{color:blue;}
+            .filter-demo:has([data-filter="language"][value="german"]:checked) .item [data-language~="german"]{color:blue;}
+        .filter-demo:has([data-filter="genre"]:checked) .item:not(.filter-demo:has([data-filter="genre"][value="fiction"]:checked) [data-genre~="fiction"],.filter-demo:has([data-filter="genre"][value="mystery"]:checked) [data-genre~="mystery"],.filter-demo:has([data-filter="genre"][value="fantasy"]:checked) [data-genre~="fantasy"],.filter-demo:has([data-filter="genre"][value="scifi"]:checked) [data-genre~="scifi"],.filter-demo:has([data-filter="genre"][value="romance"]:checked) [data-genre~="romance"],.filter-demo:has([data-filter="genre"][value="history"]:checked) [data-genre~="history"]){display:none}
+            .filter-demo:has([data-filter="genre"][value="fiction"]:checked) .item [data-genre~="fiction"]{color:blue;}
+            .filter-demo:has([data-filter="genre"][value="mystery"]:checked) .item [data-genre~="mystery"]{color:blue;}
+            .filter-demo:has([data-filter="genre"][value="fantasy"]:checked) .item [data-genre~="fantasy"]{color:blue;}
+            .filter-demo:has([data-filter="genre"][value="scifi"]:checked) .item [data-genre~="scifi"]{color:blue;}
+            .filter-demo:has([data-filter="genre"][value="romance"]:checked) .item [data-genre~="romance"]{color:blue;}
+            .filter-demo:has([data-filter="genre"][value="history"]:checked) .item [data-genre~="history"]{color:blue;}
+        .filter-demo:has([data-filter="availability"]:checked) .item:not(.filter-demo:has([data-filter="availability"][value="available"]:checked) [data-availability~="available"],.filter-demo:has([data-filter="availability"][value="checkedout"]:checked) [data-availability~="checkedout"]){display:none}
+            .filter-demo:has([data-filter="availability"][value="available"]:checked) .item [data-availability~="available"]{color:blue;}
+            .filter-demo:has([data-filter="availability"][value="checkedout"]:checked) .item [data-availability~="checkedout"]{color:blue;}
+        </style>
 
 
 </head>
 
 <body>
 
-<div class="filter-demo">
 
+<div class="filter-demo">
     <div class="filters">
                     <fieldset class="filter-group">
                 <legend>Format</legend>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="format"
-                            value="book"
-                        >
-                        Book                    </label>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="format"
-                            value="dvd"
-                        >
-                        DVD                    </label>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="format"
-                            value="audiobook"
-                        >
-                        Audiobook                    </label>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="format"
-                            value="ebook"
-                        >
-                        eBook                    </label>
+                                    <label><input type="checkbox" data-filter="format" value="book">Book</label>
+                                    <label><input type="checkbox" data-filter="format" value="dvd">DVD</label>
+                                    <label><input type="checkbox" data-filter="format" value="audiobook">Audiobook</label>
+                                    <label><input type="checkbox" data-filter="format" value="ebook">eBook</label>
                             </fieldset>
                     <fieldset class="filter-group">
                 <legend>Audience</legend>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="audience"
-                            value="adult"
-                        >
-                        Adult                    </label>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="audience"
-                            value="teen"
-                        >
-                        Teen                    </label>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="audience"
-                            value="children"
-                        >
-                        Children                    </label>
+                                    <label><input type="checkbox" data-filter="audience" value="adult">Adult</label>
+                                    <label><input type="checkbox" data-filter="audience" value="teen">Teen</label>
+                                    <label><input type="checkbox" data-filter="audience" value="children">Children</label>
                             </fieldset>
                     <fieldset class="filter-group">
                 <legend>Language</legend>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="language"
-                            value="english"
-                        >
-                        English                    </label>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="language"
-                            value="spanish"
-                        >
-                        Spanish                    </label>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="language"
-                            value="french"
-                        >
-                        French                    </label>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="language"
-                            value="german"
-                        >
-                        German                    </label>
+                                    <label><input type="checkbox" data-filter="language" value="english">English</label>
+                                    <label><input type="checkbox" data-filter="language" value="spanish">Spanish</label>
+                                    <label><input type="checkbox" data-filter="language" value="french">French</label>
+                                    <label><input type="checkbox" data-filter="language" value="german">German</label>
                             </fieldset>
                     <fieldset class="filter-group">
                 <legend>Genre</legend>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="genre"
-                            value="fiction"
-                        >
-                        Fiction                    </label>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="genre"
-                            value="mystery"
-                        >
-                        Mystery                    </label>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="genre"
-                            value="fantasy"
-                        >
-                        Fantasy                    </label>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="genre"
-                            value="scifi"
-                        >
-                        Science Fiction                    </label>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="genre"
-                            value="romance"
-                        >
-                        Romance                    </label>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="genre"
-                            value="history"
-                        >
-                        History                    </label>
+                                    <label><input type="checkbox" data-filter="genre" value="fiction">Fiction</label>
+                                    <label><input type="checkbox" data-filter="genre" value="mystery">Mystery</label>
+                                    <label><input type="checkbox" data-filter="genre" value="fantasy">Fantasy</label>
+                                    <label><input type="checkbox" data-filter="genre" value="scifi">Science Fiction</label>
+                                    <label><input type="checkbox" data-filter="genre" value="romance">Romance</label>
+                                    <label><input type="checkbox" data-filter="genre" value="history">History</label>
                             </fieldset>
                     <fieldset class="filter-group">
                 <legend>Availability</legend>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="availability"
-                            value="available"
-                        >
-                        Available                    </label>
-                                    <label>
-                        <input
-                            type="checkbox"
-                            data-filter="availability"
-                            value="checkedout"
-                        >
-                        Checked Out                    </label>
+                                    <label><input type="checkbox" data-filter="availability" value="available">Available</label>
+                                    <label><input type="checkbox" data-filter="availability" value="checkedout">Checked Out</label>
                             </fieldset>
             </div>
 
-
     <div class="results">
-
-                    
-            <div
-                class="item"
-                data-format="book audiobook ebook"
-                data-audience="adult"
-                data-language="english"
-                data-genre="fiction romance"
-                data-availability="available"
-            >
+                    <div class="item"
+                                                                            data-format="book audiobook ebook"
+                                                        data-audience="adult"
+                                                        data-language="english"
+                                                        data-genre="fiction romance"
+                                                        data-availability="available"
+                            >
                 <strong>The Great Gatsby</strong>
-                <br>
-                Format: book, audiobook, ebook                <br>
-                Audience: adult                <br>
-                Language: english                <br>
-                Genre: fiction, romance                <br>
-                Availability: available            </div>
-
-                    
-            <div
-                class="item"
-                data-format="dvd ebook"
-                data-audience="teen adult"
-                data-language="english"
-                data-genre="scifi fantasy"
-                data-availability="checkedout"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="audiobook">Audiobook</span>, <span class="item-value" data-format="ebook">eBook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="adult">Adult</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="fiction">Fiction</span>, <span class="item-value" data-genre="romance">Romance</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="available">Available</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="dvd ebook"
+                                                        data-audience="teen adult"
+                                                        data-language="english"
+                                                        data-genre="scifi fantasy"
+                                                        data-availability="checkedout"
+                            >
                 <strong>Spider-Man: Into the Spider-Verse</strong>
-                <br>
-                Format: dvd, ebook                <br>
-                Audience: teen, adult                <br>
-                Language: english                <br>
-                Genre: scifi, fantasy                <br>
-                Availability: checkedout            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book audiobook ebook"
-                data-audience="children teen"
-                data-language="french english"
-                data-genre="fiction fantasy"
-                data-availability="available"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="dvd">DVD</span>, <span class="item-value" data-format="ebook">eBook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="teen">Teen</span>, <span class="item-value" data-audience="adult">Adult</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="scifi">Science Fiction</span>, <span class="item-value" data-genre="fantasy">Fantasy</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="checkedout">Checked Out</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book audiobook ebook"
+                                                        data-audience="children teen"
+                                                        data-language="french english"
+                                                        data-genre="fiction fantasy"
+                                                        data-availability="available"
+                            >
                 <strong>Le Petit Prince</strong>
-                <br>
-                Format: book, audiobook, ebook                <br>
-                Audience: children, teen                <br>
-                Language: french, english                <br>
-                Genre: fiction, fantasy                <br>
-                Availability: available            </div>
-
-                    
-            <div
-                class="item"
-                data-format="audiobook book ebook"
-                data-audience="adult teen"
-                data-language="spanish english"
-                data-genre="fiction romance"
-                data-availability="checkedout"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="audiobook">Audiobook</span>, <span class="item-value" data-format="ebook">eBook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="children">Children</span>, <span class="item-value" data-audience="teen">Teen</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="french">French</span>, <span class="item-value" data-language="english">English</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="fiction">Fiction</span>, <span class="item-value" data-genre="fantasy">Fantasy</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="available">Available</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="audiobook book ebook"
+                                                        data-audience="adult teen"
+                                                        data-language="spanish english"
+                                                        data-genre="fiction romance"
+                                                        data-availability="checkedout"
+                            >
                 <strong>Don Quixote</strong>
-                <br>
-                Format: audiobook, book, ebook                <br>
-                Audience: adult, teen                <br>
-                Language: spanish, english                <br>
-                Genre: fiction, romance                <br>
-                Availability: checkedout            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book audiobook ebook"
-                data-audience="children teen adult"
-                data-language="english german"
-                data-genre="fantasy"
-                data-availability="available"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="audiobook">Audiobook</span>, <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="ebook">eBook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="adult">Adult</span>, <span class="item-value" data-audience="teen">Teen</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="spanish">Spanish</span>, <span class="item-value" data-language="english">English</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="fiction">Fiction</span>, <span class="item-value" data-genre="romance">Romance</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="checkedout">Checked Out</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book audiobook ebook"
+                                                        data-audience="children teen adult"
+                                                        data-language="english german"
+                                                        data-genre="fantasy"
+                                                        data-availability="available"
+                            >
                 <strong>The Hobbit</strong>
-                <br>
-                Format: book, audiobook, ebook                <br>
-                Audience: children, teen, adult                <br>
-                Language: english, german                <br>
-                Genre: fantasy                <br>
-                Availability: available            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book audiobook ebook"
-                data-audience="adult teen"
-                data-language="english french german"
-                data-genre="fiction fantasy romance"
-                data-availability="checkedout"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="audiobook">Audiobook</span>, <span class="item-value" data-format="ebook">eBook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="children">Children</span>, <span class="item-value" data-audience="teen">Teen</span>, <span class="item-value" data-audience="adult">Adult</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span>, <span class="item-value" data-language="german">German</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="fantasy">Fantasy</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="available">Available</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book audiobook ebook"
+                                                        data-audience="adult teen"
+                                                        data-language="english french german"
+                                                        data-genre="fiction fantasy romance"
+                                                        data-availability="checkedout"
+                            >
                 <strong>Dracula</strong>
-                <br>
-                Format: book, audiobook, ebook                <br>
-                Audience: adult, teen                <br>
-                Language: english, french, german                <br>
-                Genre: fiction, fantasy, romance                <br>
-                Availability: checkedout            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book ebook audiobook"
-                data-audience="adult teen"
-                data-language="english"
-                data-genre="scifi"
-                data-availability="available"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="audiobook">Audiobook</span>, <span class="item-value" data-format="ebook">eBook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="adult">Adult</span>, <span class="item-value" data-audience="teen">Teen</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span>, <span class="item-value" data-language="french">French</span>, <span class="item-value" data-language="german">German</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="fiction">Fiction</span>, <span class="item-value" data-genre="fantasy">Fantasy</span>, <span class="item-value" data-genre="romance">Romance</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="checkedout">Checked Out</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book ebook audiobook"
+                                                        data-audience="adult teen"
+                                                        data-language="english"
+                                                        data-genre="scifi"
+                                                        data-availability="available"
+                            >
                 <strong>The Martian</strong>
-                <br>
-                Format: book, ebook, audiobook                <br>
-                Audience: adult, teen                <br>
-                Language: english                <br>
-                Genre: scifi                <br>
-                Availability: available            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book audiobook"
-                data-audience="children"
-                data-language="english french"
-                data-genre="fiction"
-                data-availability="available"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="ebook">eBook</span>, <span class="item-value" data-format="audiobook">Audiobook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="adult">Adult</span>, <span class="item-value" data-audience="teen">Teen</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="scifi">Science Fiction</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="available">Available</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book audiobook"
+                                                        data-audience="children"
+                                                        data-language="english french"
+                                                        data-genre="fiction"
+                                                        data-availability="available"
+                            >
                 <strong>Charlotte’s Web</strong>
-                <br>
-                Format: book, audiobook                <br>
-                Audience: children                <br>
-                Language: english, french                <br>
-                Genre: fiction                <br>
-                Availability: available            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book ebook"
-                data-audience="adult"
-                data-language="english french german"
-                data-genre="mystery history"
-                data-availability="checkedout"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="audiobook">Audiobook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="children">Children</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span>, <span class="item-value" data-language="french">French</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="fiction">Fiction</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="available">Available</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book ebook"
+                                                        data-audience="adult"
+                                                        data-language="english french german"
+                                                        data-genre="mystery history"
+                                                        data-availability="checkedout"
+                            >
                 <strong>The Name of the Rose</strong>
-                <br>
-                Format: book, ebook                <br>
-                Audience: adult                <br>
-                Language: english, french, german                <br>
-                Genre: mystery, history                <br>
-                Availability: checkedout            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book dvd audiobook ebook"
-                data-audience="children teen adult"
-                data-language="english french german"
-                data-genre="fantasy"
-                data-availability="available"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="ebook">eBook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="adult">Adult</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span>, <span class="item-value" data-language="french">French</span>, <span class="item-value" data-language="german">German</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="mystery">Mystery</span>, <span class="item-value" data-genre="history">History</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="checkedout">Checked Out</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book dvd audiobook ebook"
+                                                        data-audience="children teen adult"
+                                                        data-language="english french german"
+                                                        data-genre="fantasy"
+                                                        data-availability="available"
+                            >
                 <strong>Harry Potter and the Philosopher’s Stone</strong>
-                <br>
-                Format: book, dvd, audiobook, ebook                <br>
-                Audience: children, teen, adult                <br>
-                Language: english, french, german                <br>
-                Genre: fantasy                <br>
-                Availability: available            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book audiobook ebook"
-                data-audience="adult teen"
-                data-language="english french german"
-                data-genre="romance fiction"
-                data-availability="checkedout"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="dvd">DVD</span>, <span class="item-value" data-format="audiobook">Audiobook</span>, <span class="item-value" data-format="ebook">eBook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="children">Children</span>, <span class="item-value" data-audience="teen">Teen</span>, <span class="item-value" data-audience="adult">Adult</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span>, <span class="item-value" data-language="french">French</span>, <span class="item-value" data-language="german">German</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="fantasy">Fantasy</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="available">Available</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book audiobook ebook"
+                                                        data-audience="adult teen"
+                                                        data-language="english french german"
+                                                        data-genre="romance fiction"
+                                                        data-availability="checkedout"
+                            >
                 <strong>Pride and Prejudice</strong>
-                <br>
-                Format: book, audiobook, ebook                <br>
-                Audience: adult, teen                <br>
-                Language: english, french, german                <br>
-                Genre: romance, fiction                <br>
-                Availability: checkedout            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book audiobook ebook"
-                data-audience="adult teen"
-                data-language="english french"
-                data-genre="mystery fiction"
-                data-availability="available"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="audiobook">Audiobook</span>, <span class="item-value" data-format="ebook">eBook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="adult">Adult</span>, <span class="item-value" data-audience="teen">Teen</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span>, <span class="item-value" data-language="french">French</span>, <span class="item-value" data-language="german">German</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="romance">Romance</span>, <span class="item-value" data-genre="fiction">Fiction</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="checkedout">Checked Out</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book audiobook ebook"
+                                                        data-audience="adult teen"
+                                                        data-language="english french"
+                                                        data-genre="mystery fiction"
+                                                        data-availability="available"
+                            >
                 <strong>The Hound of the Baskervilles</strong>
-                <br>
-                Format: book, audiobook, ebook                <br>
-                Audience: adult, teen                <br>
-                Language: english, french                <br>
-                Genre: mystery, fiction                <br>
-                Availability: available            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book audiobook ebook"
-                data-audience="adult"
-                data-language="english german"
-                data-genre="history scifi"
-                data-availability="checkedout"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="audiobook">Audiobook</span>, <span class="item-value" data-format="ebook">eBook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="adult">Adult</span>, <span class="item-value" data-audience="teen">Teen</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span>, <span class="item-value" data-language="french">French</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="mystery">Mystery</span>, <span class="item-value" data-genre="fiction">Fiction</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="available">Available</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book audiobook ebook"
+                                                        data-audience="adult"
+                                                        data-language="english german"
+                                                        data-genre="history scifi"
+                                                        data-availability="checkedout"
+                            >
                 <strong>A Brief History of Time</strong>
-                <br>
-                Format: book, audiobook, ebook                <br>
-                Audience: adult                <br>
-                Language: english, german                <br>
-                Genre: history, scifi                <br>
-                Availability: checkedout            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book dvd audiobook"
-                data-audience="children teen"
-                data-language="french english spanish"
-                data-genre="fiction fantasy"
-                data-availability="available"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="audiobook">Audiobook</span>, <span class="item-value" data-format="ebook">eBook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="adult">Adult</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span>, <span class="item-value" data-language="german">German</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="history">History</span>, <span class="item-value" data-genre="scifi">Science Fiction</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="checkedout">Checked Out</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book dvd audiobook"
+                                                        data-audience="children teen"
+                                                        data-language="french english spanish"
+                                                        data-genre="fiction fantasy"
+                                                        data-availability="available"
+                            >
                 <strong>The Little Prince</strong>
-                <br>
-                Format: book, dvd, audiobook                <br>
-                Audience: children, teen                <br>
-                Language: french, english, spanish                <br>
-                Genre: fiction, fantasy                <br>
-                Availability: available            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book audiobook ebook"
-                data-audience="teen adult"
-                data-language="english french german"
-                data-genre="scifi fantasy"
-                data-availability="checkedout"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="dvd">DVD</span>, <span class="item-value" data-format="audiobook">Audiobook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="children">Children</span>, <span class="item-value" data-audience="teen">Teen</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="french">French</span>, <span class="item-value" data-language="english">English</span>, <span class="item-value" data-language="spanish">Spanish</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="fiction">Fiction</span>, <span class="item-value" data-genre="fantasy">Fantasy</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="available">Available</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book audiobook ebook"
+                                                        data-audience="teen adult"
+                                                        data-language="english french german"
+                                                        data-genre="scifi fantasy"
+                                                        data-availability="checkedout"
+                            >
                 <strong>Dune</strong>
-                <br>
-                Format: book, audiobook, ebook                <br>
-                Audience: teen, adult                <br>
-                Language: english, french, german                <br>
-                Genre: scifi, fantasy                <br>
-                Availability: checkedout            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book audiobook ebook"
-                data-audience="teen adult"
-                data-language="english french"
-                data-genre="mystery fiction"
-                data-availability="available"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="audiobook">Audiobook</span>, <span class="item-value" data-format="ebook">eBook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="teen">Teen</span>, <span class="item-value" data-audience="adult">Adult</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span>, <span class="item-value" data-language="french">French</span>, <span class="item-value" data-language="german">German</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="scifi">Science Fiction</span>, <span class="item-value" data-genre="fantasy">Fantasy</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="checkedout">Checked Out</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book audiobook ebook"
+                                                        data-audience="teen adult"
+                                                        data-language="english french"
+                                                        data-genre="mystery fiction"
+                                                        data-availability="available"
+                            >
                 <strong>The Adventures of Sherlock Holmes</strong>
-                <br>
-                Format: book, audiobook, ebook                <br>
-                Audience: teen, adult                <br>
-                Language: english, french                <br>
-                Genre: mystery, fiction                <br>
-                Availability: available            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book audiobook dvd"
-                data-audience="children teen"
-                data-language="english german french"
-                data-genre="fantasy"
-                data-availability="available"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="audiobook">Audiobook</span>, <span class="item-value" data-format="ebook">eBook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="teen">Teen</span>, <span class="item-value" data-audience="adult">Adult</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span>, <span class="item-value" data-language="french">French</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="mystery">Mystery</span>, <span class="item-value" data-genre="fiction">Fiction</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="available">Available</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book audiobook dvd"
+                                                        data-audience="children teen"
+                                                        data-language="english german french"
+                                                        data-genre="fantasy"
+                                                        data-availability="available"
+                            >
                 <strong>The Lion, the Witch and the Wardrobe</strong>
-                <br>
-                Format: book, audiobook, dvd                <br>
-                Audience: children, teen                <br>
-                Language: english, german, french                <br>
-                Genre: fantasy                <br>
-                Availability: available            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book audiobook ebook"
-                data-audience="adult"
-                data-language="french english"
-                data-genre="fiction romance history"
-                data-availability="checkedout"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="audiobook">Audiobook</span>, <span class="item-value" data-format="dvd">DVD</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="children">Children</span>, <span class="item-value" data-audience="teen">Teen</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span>, <span class="item-value" data-language="german">German</span>, <span class="item-value" data-language="french">French</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="fantasy">Fantasy</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="available">Available</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book audiobook ebook"
+                                                        data-audience="adult"
+                                                        data-language="french english"
+                                                        data-genre="fiction romance history"
+                                                        data-availability="checkedout"
+                            >
                 <strong>The Count of Monte Cristo</strong>
-                <br>
-                Format: book, audiobook, ebook                <br>
-                Audience: adult                <br>
-                Language: french, english                <br>
-                Genre: fiction, romance, history                <br>
-                Availability: checkedout            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book ebook audiobook"
-                data-audience="teen adult"
-                data-language="english german"
-                data-genre="scifi"
-                data-availability="available"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="audiobook">Audiobook</span>, <span class="item-value" data-format="ebook">eBook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="adult">Adult</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="french">French</span>, <span class="item-value" data-language="english">English</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="fiction">Fiction</span>, <span class="item-value" data-genre="romance">Romance</span>, <span class="item-value" data-genre="history">History</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="checkedout">Checked Out</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book ebook audiobook"
+                                                        data-audience="teen adult"
+                                                        data-language="english german"
+                                                        data-genre="scifi"
+                                                        data-availability="available"
+                            >
                 <strong>Ender’s Game</strong>
-                <br>
-                Format: book, ebook, audiobook                <br>
-                Audience: teen, adult                <br>
-                Language: english, german                <br>
-                Genre: scifi                <br>
-                Availability: available            </div>
-
-                    
-            <div
-                class="item"
-                data-format="book audiobook"
-                data-audience="children teen"
-                data-language="english french"
-                data-genre="fiction romance"
-                data-availability="available"
-            >
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="ebook">eBook</span>, <span class="item-value" data-format="audiobook">Audiobook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="teen">Teen</span>, <span class="item-value" data-audience="adult">Adult</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span>, <span class="item-value" data-language="german">German</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="scifi">Science Fiction</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="available">Available</span></div>
+                            </div>
+                    <div class="item"
+                                                                            data-format="book audiobook"
+                                                        data-audience="children teen"
+                                                        data-language="english french"
+                                                        data-genre="fiction romance"
+                                                        data-availability="available"
+                            >
                 <strong>The Secret Garden</strong>
-                <br>
-                Format: book, audiobook                <br>
-                Audience: children, teen                <br>
-                Language: english, french                <br>
-                Genre: fiction, romance                <br>
-                Availability: available            </div>
-
+                                                                            <div class="item-line">Format: <span class="item-value" data-format="book">Book</span>, <span class="item-value" data-format="audiobook">Audiobook</span></div>
+                                                        <div class="item-line">Audience: <span class="item-value" data-audience="children">Children</span>, <span class="item-value" data-audience="teen">Teen</span></div>
+                                                        <div class="item-line">Language: <span class="item-value" data-language="english">English</span>, <span class="item-value" data-language="french">French</span></div>
+                                                        <div class="item-line">Genre: <span class="item-value" data-genre="fiction">Fiction</span>, <span class="item-value" data-genre="romance">Romance</span></div>
+                                                        <div class="item-line">Availability: <span class="item-value" data-availability="available">Available</span></div>
+                            </div>
             </div>
 </div>
+
+
 </body>
 </html>
