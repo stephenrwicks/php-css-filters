@@ -218,12 +218,114 @@ $items = [
     ],
 ];
 
+function filterDisplayCSS(string $k, array $options)
+{
+    $matchingItems = implode(',', array_map(
+        fn($v) => ".filters:has([data-filter=\"{$k}\"][value=\"{$v}\"]:checked) ~ .results .item[data-{$k}~=\"{$v}\"]", array_keys($options)
+    ));
+
+    echo ".filters:has([data-filter=\"{$k}\"]:checked) ~ .results .item:not({$matchingItems}){display:none}";
+}
+
+function filterHighlightCSS(string $k, string $v)
+{
+    echo ".filters:has([data-filter=\"{$k}\"][value=\"{$v}\"]:checked) ~ .results .item span[data-{$k}~=\"{$v}\"]{color:blue;}";
+}
+
+function noResultsCSS(array $items, array $filters): void
+{
+    $conditions = [];
+
+    foreach ($items as $item) {
+        $itemMatches = [];
+
+        foreach ($filters as $filter => $options) {
+            $values = $item[$filter] ?? [];
+
+            if (!$values) {
+                continue;
+            }
+
+            foreach ($values as $value) {
+                $itemMatches[] = ".filters:has([data-filter=\"{$filter}\"][value=\"{$value}\"]:checked)";
+            }
+        }
+
+        if ($itemMatches) {
+            $conditions[] = ":not(:is(" . implode(',', $itemMatches) . "))";
+        }
+    }
+
+    echo ".filters:has(" . implode("):has(", $conditions) . ") ~ .no-results{display:block}";
+}
+
+function h(string $x): string {
+    return htmlspecialchars($x);
+}
+
+function renderFilter(string $filter, array $options): void
+{
+    $legend = h(ucfirst($filter));
+
+    echo "<fieldset class=\"filter\"><legend>{$legend}</legend>";
+
+    foreach ($options as $value => $label) {
+        $filter = h($filter);
+        $value = h($value);
+        $label = h($label);
+
+        echo "<label><input type=\"checkbox\" data-filter=\"{$filter}\" value=\"{$value}\">{$label}</label>";
+    }
+
+    echo "</fieldset>";
+}
+
+function renderItem(array $item, array $filters): void
+{
+    $title = h($item['title']);
+
+    echo "<div class=\"item\"";
+
+    foreach ($item as $key => $values) {
+        if (!isset($filters[$key])) continue;
+
+        $attribute = h($key);
+        $value = h(implode(' ', $values));
+
+        echo " data-{$attribute}=\"{$value}\"";
+    }
+
+    echo "><strong>{$title}</strong>";
+
+    foreach ($item as $key => $values) {
+        if (!isset($filters[$key])) continue;
+
+        $label = h(ucfirst($key));
+
+        echo "<div>{$label}: ";
+
+        foreach ($values as $index => $value) {
+            if ($index > 0) echo ', ';
+            $label = h($filters[$key][$value] ?? '');
+            $key = h($key);
+            $value = h($value);
+            echo "<span data-{$key}=\"{$value}\">{$label}</span>";
+        }
+
+        echo "</div>";
+    }
+
+    echo "</div>";
+}
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>php + css filters</title>
+    <title>PHP / CSS Filters - No JS</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/stephenrwicks/wicks.css@main/wicks.css">
     <style>
 
@@ -231,29 +333,46 @@ $items = [
         margin: 0;
         padding: 0;
         height: 100vh;
-
-    }
-
-    .filter-demo {
-        height: 100vh;
-        display: grid;
-        grid-template-rows: min-content 1fr;
-        gap: 20px;
-    }
-
-    .filters {
         display: flex;
-        flex-flow: row wrap;
-        gap: 20px;
+        flex-flow: column nowrap;
+        
+        &:has([value="bottom"]:checked) {
+            flex-flow: column-reverse nowrap;
+        }
+    }
+
+    section {
         padding: 10px;
     }
 
-    .filter-group {
-        flex: 1;
+    .filters {
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        gap: 20px;
+    }
 
+    button[type="reset"] {
+        visibility: hidden;
+    }
+
+    body:has(details[open]):has(.filter input:checked) button[type="reset"] {
+        visibility: visible;
+    }
+
+    .filter {
+        flex: 1;
         &:has(:checked) legend {
             font-weight: bold;
         }
+    }
+
+    .display {
+        display: flex;
+        gap: 2rem;
+        padding-block: 0px;
+        justify-content: space-between;
+        flex-shrink: 0;
     }
 
     .results {
@@ -263,59 +382,104 @@ $items = [
         gap: 20px;
         overflow: auto;
         padding: 10px;
-        border: 1px solid #ddd;
+        border: 1px solid var(--gray);
+        flex: 1;
     }
 
     .item {
         display: block;
         padding: 10px;
-        border: 1px solid #ddd;
+        border: 1px solid var(--gray);
     }
 
-<?php foreach ($filters as $filter => $options): ?>
-    .filter-demo:has([data-filter="<?= $filter ?>"]:checked) .item:not(<?= implode(',', array_map(fn($v) => ".filter-demo:has([data-filter=\"{$filter}\"][value=\"{$v}\"]:checked) [data-{$filter}~=\"{$v}\"]", array_keys($options))) ?>){display:none}
-    <?php foreach ($options as $value => $label): ?>
-        .filter-demo:has([data-filter="<?= $filter ?>"][value="<?= $value ?>"]:checked) .item [data-<?= $filter ?>~="<?= $value ?>"]{color:blue;}
-    <?php endforeach; ?>
-<?php endforeach; ?>
-    </style>
+    body:has(option[value="list"]:checked) .results {
+        grid-template-columns: 1fr;
+        gap: 5px;
+        padding-inline: 4rem;
+        justify-self: center;
+    }
 
+    body:has(option[value="compact"]:checked) .item {
+        border-color: transparent;
+        padding: 0px;
+    }
 
+    body:has(option[value="compact"]:checked) .item > div {
+        display: none;
+    }
+
+    dialog form {
+        all: unset; 
+        width: 20rem; 
+        padding: 20px; 
+        display: grid;
+        gap: 10px;
+    }
+
+    summary {
+        &::before {
+            all: unset;
+            display: block;
+            content: "Collapse Filters";
+        }
+    }
+
+    body:has(details:not([open])) summary::before {
+        content: "Show Filters";
+    }
+
+<?php
+foreach ($filters as $filter => $options) {
+    filterDisplayCSS($filter, $options);
+    foreach ($options as $value => $label) {
+        filterHighlightCSS($filter, $value);
+    }
+}
+
+?>
+</style>
 </head>
-
 <body>
+<details open><summary></summary>
+    <form onsubmit="return false;" id="form" class="filters">
+    <?php foreach ($filters as $filter => $options): ?><?php renderFilter($filter, $options); ?><?php endforeach; ?>
+    </form>
+</details>
 
+<section class="display">
+    <button form="form" type="reset">Clear Filters</button>
+    <button type="button" commandfor="display-modal" command="show-modal">Change Display</button> 
+    <dialog id="display-modal">
+    <form onsubmit="return false;">
+        <div>
+            <label for="layout">Layout</label>
+            <select id="layout">
+                <option value="grid">Grid</option>
+                <option value="list">List</option>
+            </select>
+        </div>
+        <div>
+            <label for="display">Display</label>
+            <select id="display">
+                <option value="full">Full</option>
+                <option value="compact">Compact</option>
+            </select>
+        </div>
+        <div>
+            <label for="filter-position">Filter Position</label>
+            <select id="filter-position">
+                <option value="top">Top</option>
+                <option value="bottom">Bottom</option>
+            </select>
+        </div>
+        <div style="margin-top: 10px;">
+            <button type="button" commandfor="display-modal" command="close" style="margin-left: auto;">OK</button>
+        </div>
+    </form>
 
-<div class="filter-demo">
-    <div class="filters">
-        <?php foreach ($filters as $filter => $options): ?>
-            <fieldset class="filter-group">
-                <legend><?= ucfirst($filter) ?></legend>
-                <?php foreach ($options as $value => $label): ?>
-                    <label><input type="checkbox" data-filter="<?= htmlspecialchars($filter) ?>" value="<?= htmlspecialchars($value) ?>"><?= htmlspecialchars($label) ?></label>
-                <?php endforeach; ?>
-            </fieldset>
-        <?php endforeach; ?>
-    </div>
+</dialog>
+</section>
 
-    <div class="results">
-        <?php foreach ($items as $item): ?>
-            <div class="item"
-                <?php foreach ($item as $key => $values): ?>
-                    <?php if (!isset($filters[$key])) continue; ?>
-                    data-<?= htmlspecialchars($key) ?>="<?= htmlspecialchars(implode(' ', $values)) ?>"
-                <?php endforeach; ?>
-            >
-                <strong><?= htmlspecialchars($item['title']) ?></strong>
-                <?php foreach ($item as $key => $values): ?>
-                    <?php if (!isset($filters[$key])) continue; ?>
-                    <div class="item-line"><?= htmlspecialchars(ucfirst($key)) ?>: <?php foreach ($values as $index => $value): ?><?php if ($index > 0): ?>, <?php endif; ?><span class="item-value" data-<?= htmlspecialchars($key) ?>="<?= htmlspecialchars($value) ?>"><?= htmlspecialchars($filters[$key][$value]) ?></span><?php endforeach; ?></div>
-                <?php endforeach; ?>
-            </div>
-        <?php endforeach; ?>
-    </div>
-</div>
-
-
+<section class="results"><?php foreach ($items as $item): ?><?php renderItem($item, $filters); ?><?php endforeach; ?></section>
 </body>
 </html>
