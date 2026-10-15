@@ -221,15 +221,15 @@ $items = [
 function filterDisplayCSS(string $k, array $options)
 {
     $matchingItems = implode(',', array_map(
-        fn($v) => ".filters:has([data-filter=\"{$k}\"][value=\"{$v}\"]:checked) ~ .results .item[data-{$k}~=\"{$v}\"]", array_keys($options)
+        fn($v) => "details:has([data-filter=\"{$k}\"][value=\"{$v}\"]:checked) ~ .results .item[data-{$k}~=\"{$v}\"]", array_keys($options)
     ));
 
-    echo ".filters:has([data-filter=\"{$k}\"]:checked) ~ .results .item:not({$matchingItems}){display:none}";
+    echo "details:has([data-filter=\"{$k}\"]:checked) ~ .results .item:not({$matchingItems}){display:none}";
 }
 
 function filterHighlightCSS(string $k, string $v)
 {
-    echo ".filters:has([data-filter=\"{$k}\"][value=\"{$v}\"]:checked) ~ .results .item span[data-{$k}~=\"{$v}\"]{color:blue;}";
+    echo "details:has([data-filter=\"{$k}\"][value=\"{$v}\"]:checked) ~ .results .item span[data-{$k}~=\"{$v}\"]{color:blue;}";
 }
 
 function noResultsCSS(array $items, array $filters): void
@@ -247,7 +247,7 @@ function noResultsCSS(array $items, array $filters): void
             }
 
             foreach ($values as $value) {
-                $itemMatches[] = ".filters:has([data-filter=\"{$filter}\"][value=\"{$value}\"]:checked)";
+                $itemMatches[] = "details:has([data-filter=\"{$filter}\"][value=\"{$value}\"]:checked)";
             }
         }
 
