@@ -221,43 +221,33 @@ $items = [
 function filterDisplayCSS(string $k, array $options)
 {
     $matchingItems = implode(',', array_map(
-        fn($v) => "details:has([data-filter=\"{$k}\"][value=\"{$v}\"]:checked) ~ .results .item[data-{$k}~=\"{$v}\"]", array_keys($options)
+        fn($v) => 'details:has([data-filter="' . $k . '"][value="' . $v . '"]:checked) ~ .results .item[data-' . $k . '~="' . $v . '"]', array_keys($options)
     ));
 
-    echo "details:has([data-filter=\"{$k}\"]:checked) ~ .results .item:not({$matchingItems}){display:none}";
+    echo 'details:has([data-filter="' . $k . '"]:checked) ~ .results .item:not(' . $matchingItems . '){display:none}';
 }
 
 function filterHighlightCSS(string $k, string $v)
 {
-    echo "details:has([data-filter=\"{$k}\"][value=\"{$v}\"]:checked) ~ .results .item span[data-{$k}~=\"{$v}\"]{color:blue;}";
+    echo 'details:has([data-filter="' . $k . '"][value="' . $v . '"]:checked) ~ .results .item span[data-' . $k . '~="' . $v . '"]{color:blue;}';
 }
 
-function noResultsCSS(array $items, array $filters): void
+function sortCSS(array $items)
 {
-    $conditions = [];
+    foreach ([
+        'a-z' => fn($a, $b) => strcasecmp(preg_replace('/^(the|a|an)\s+/i', '', $a['title']), preg_replace('/^(the|a|an)\s+/i', '', $b['title'])),
+        'z-a' => fn($a, $b) => strcasecmp(preg_replace('/^(the|a|an)\s+/i', '', $b['title']), preg_replace('/^(the|a|an)\s+/i', '', $a['title'])),
+    ] as $sort => $compare) {
+        $sortedItems = $items;
+        usort($sortedItems, $compare);
 
-    foreach ($items as $item) {
-        $itemMatches = [];
-
-        foreach ($filters as $filter => $options) {
-            $values = $item[$filter] ?? [];
-
-            if (!$values) {
-                continue;
-            }
-
-            foreach ($values as $value) {
-                $itemMatches[] = "details:has([data-filter=\"{$filter}\"][value=\"{$value}\"]:checked)";
-            }
-        }
-
-        if ($itemMatches) {
-            $conditions[] = ":not(:is(" . implode(',', $itemMatches) . "))";
+        foreach ($sortedItems as $i => $item) {
+            $title = $item['title'];
+            echo 'body:has(option[value="' . $sort . '"]:checked) .results .item[data-title="' . $title . '"]{order:' . $i . ';}';
         }
     }
-
-    echo ".filters:has(" . implode("):has(", $conditions) . ") ~ .no-results{display:block}";
 }
+
 
 function h(string $x): string {
     return htmlspecialchars($x);
@@ -265,26 +255,27 @@ function h(string $x): string {
 
 function renderFilter(string $filter, array $options): void
 {
+    $filter = h($filter);
     $legend = h(ucfirst($filter));
 
-    echo "<fieldset class=\"filter\"><legend>{$legend}</legend>";
+    echo '<fieldset class="filter"><legend>' . $legend . '</legend>';
 
     foreach ($options as $value => $label) {
         $filter = h($filter);
         $value = h($value);
         $label = h($label);
 
-        echo "<label><input type=\"checkbox\" data-filter=\"{$filter}\" value=\"{$value}\">{$label}</label>";
+        echo '<label><input type="checkbox" data-filter="' . $filter . '" value="' . $value . '">' . $label . '</label>';
     }
 
-    echo "</fieldset>";
+    echo '</fieldset>';
 }
 
 function renderItem(array $item, array $filters): void
 {
     $title = h($item['title']);
 
-    echo "<div class=\"item\"";
+    echo '<div class="item" data-title="' . $title . '"';
 
     foreach ($item as $key => $values) {
         if (!isset($filters[$key])) continue;
@@ -292,30 +283,30 @@ function renderItem(array $item, array $filters): void
         $attribute = h($key);
         $value = h(implode(' ', $values));
 
-        echo " data-{$attribute}=\"{$value}\"";
+        echo ' data-' . $attribute . '="' . $value . '"';
     }
 
-    echo "><strong>{$title}</strong>";
+    echo '><strong>' . $title . '</strong>';
 
     foreach ($item as $key => $values) {
         if (!isset($filters[$key])) continue;
 
         $label = h(ucfirst($key));
 
-        echo "<div>{$label}: ";
+        echo '<div>' . $label . ': ';
 
         foreach ($values as $index => $value) {
             if ($index > 0) echo ', ';
             $label = h($filters[$key][$value] ?? '');
             $key = h($key);
             $value = h($value);
-            echo "<span data-{$key}=\"{$value}\">{$label}</span>";
+            echo '<span data-' . $key . '="' . $value . '">' . $label . '</span>';
         }
 
-        echo "</div>";
+        echo '</div>';
     }
 
-    echo "</div>";
+    echo '</div>';
 }
 
 
@@ -429,12 +420,14 @@ function renderItem(array $item, array $filters): void
     }
 
 <?php
+
 foreach ($filters as $filter => $options) {
     filterDisplayCSS($filter, $options);
     foreach ($options as $value => $label) {
         filterHighlightCSS($filter, $value);
     }
 }
+sortCSS($items);
 
 ?>
 </style>
@@ -451,6 +444,13 @@ foreach ($filters as $filter => $options) {
     <button type="button" commandfor="display-modal" command="show-modal">Change Display</button> 
     <dialog id="display-modal">
     <form onsubmit="return false;">
+        <div>
+            <label for="sort">Sort</label>
+            <select id="sort">
+                <option value="a-z">A-Z</option>
+                <option value="z-a">Z-A</option>
+            </select>
+        </div>
         <div>
             <label for="layout">Layout</label>
             <select id="layout">
